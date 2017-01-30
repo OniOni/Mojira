@@ -3,7 +3,7 @@ import json
 
 class Moji(object):
 
-    def __init__(self, json_file: str):
+    def __init__(self, json_file: str) -> None:
         self.file = json_file
 
     def load(self) -> dict:
@@ -11,7 +11,7 @@ class Moji(object):
             return json.load(fd)
 
     @property
-    def moji(self) -> None:
+    def moji(self) -> dict:
         if not hasattr(self, '_moji'):
             self._moji = self.load()
 
