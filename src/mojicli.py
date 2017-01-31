@@ -21,15 +21,14 @@ class Mojira(object):
 
         return self._moji
 
-    def search(self, keyword: str) -> list:
-        return [
-            {'name': key, 'moji': res['char']}
-            for key, res in self.items()
-            if keyword in res['keywords']
-        ]
+    def __str__(self) -> str:
+        return ", ".join(["{}:{}".format(k, v['char']) for k, v in self.items()])
 
     def filter(self, keyword: str):
-        return MojiView(self, [k for k, v in self.items() if keyword in v['keywords']])
+        return MojiView(self, [
+            k for k, v in self.items()
+            if keyword in v['keywords'] or keyword == k
+        ])
 
 
 class MojiView(Mojira):
@@ -51,6 +50,6 @@ if __name__ == "__main__":
 
 
     args = parser.parse_args()
-    print("Searching for", args.search)
-    res = m.search(args.search)
-    print("\n".join("{}: {}".format(el['name'], el['moji']) for el in res))
+    print("Searching for {}:".format(args.search))
+    res = m.filter(args.search)
+    print(res)
