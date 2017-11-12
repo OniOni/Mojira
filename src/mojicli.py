@@ -22,7 +22,7 @@ class Mojira(object):
         return self._moji
 
     def __str__(self) -> str:
-        return ", ".join(["{}:{}".format(k, v['char']) for k, v in self.items()])
+        return "\n".join(["{}: {}".format(k, v['char']) for k, v in self.items()])
 
     def filter(self, keyword: str):
         return MojiView(self, [
@@ -45,9 +45,8 @@ class MojiView(Mojira):
 if __name__ == "__main__":
     m = Mojira('emojis.json')
 
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser(description='Search for emojis.')
     parser.add_argument('search', type=str)
-
 
     args = parser.parse_args()
     print("Searching for {}:".format(args.search))
